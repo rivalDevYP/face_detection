@@ -17,7 +17,6 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    std::string path = "/home/yathavan/Documents/faceDetection/testIndian.jpg";
     cv::namedWindow("Face Recognition", cv::WINDOW_AUTOSIZE);
     cv::VideoCapture cap;
 
