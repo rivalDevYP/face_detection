@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    cv::namedWindow("Face Recognition", cv::WINDOW_AUTOSIZE);
+    // cv::namedWindow("Face Recognition", cv::WINDOW_AUTOSIZE);
     cv::VideoCapture cap;
 
     if (argc == 1)
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         }
 
         cv::imshow("FaceRec", frame);
-        cv::waitKey(10);
+        cv::waitKey(1);
     }
 
     cv::imshow("Detected Face", frame);
