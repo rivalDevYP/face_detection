@@ -8,7 +8,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-int main()
+int main(int argc, char **argv)
 {
     cv::CascadeClassifier faceDetection;
     if (!faceDetection.load("/home/yathavan/Documents/faceDetection/haarcascade_frontalface_default.xml"))
@@ -18,30 +18,60 @@ int main()
     }
 
     std::string path = "/home/yathavan/Documents/faceDetection/testIndian.jpg";
+    cv::namedWindow("Face Recognition", cv::WINDOW_AUTOSIZE);
+    cv::VideoCapture cap;
 
-    cv::Mat img = cv::imread(path, cv::IMREAD_UNCHANGED);
-
-    if (img.empty())
+    if (argc == 1)
     {
-        std::cout << "\n Image is not loaded properly";
+        cap.open(0);
     }
     else
     {
-        std::cout << "\n Image is found!";
-        std::cout << "\n Processing...";
+        cap.open(argv[1]);
+    }
+
+    if (!cap.isOpened())
+    {
+        std::cerr << "couldn't open capture!" << std::endl;
+        return -1;
+    }
+
+    cv::Mat frame;
+
+    for (;;)
+    {
+        cap >> frame;
+
+        if (frame.empty())
+        {
+            break;
+        }
+
+        cv::imshow("FaceRec", frame);
+
+        // std::cout << "\n Image is found!";
+        // std::cout << "\n Processing...";
 
         std::vector<cv::Rect> faces;
-        faceDetection.detectMultiScale(img, faces);
+        faceDetection.detectMultiScale(frame, faces);
 
         for (int index = 0; index < faces.size(); index++)
         {
             cv::Point pt1(faces[index].x, faces[index].y);
             cv::Point pt2((faces[index].x + faces[index].height), (faces[index].y + faces[index].width));
-            cv::rectangle(img, pt1, pt2, cv::Scalar(0, 255, 0), 4, 8, 0);
+            cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 4, 8, 0);
         }
 
-        cv::imwrite("/home/yathavan/Documents/faceDetection/outputIndian.jpg", img);
-        
-        std::cout << "\n Face detected success!";
+        cv::imshow("FaceRec", frame);
+        cv::waitKey(10);
+
+        // cv::imwrite("/home/yathavan/Documents/faceDetection/output.jpg", frame);
+
+        // std::cout << "\n Face detected success!";
     }
+
+    cv::imshow("Detected Face", frame);
+    cv::waitKey(0);
+
+    return 0;
 }
