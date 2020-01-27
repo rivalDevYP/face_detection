@@ -49,9 +49,6 @@ int main(int argc, char **argv)
 
         cv::imshow("FaceRec", frame);
 
-        // std::cout << "\n Image is found!";
-        // std::cout << "\n Processing...";
-
         std::vector<cv::Rect> faces;
         faceDetection.detectMultiScale(frame, faces);
 
@@ -64,10 +61,6 @@ int main(int argc, char **argv)
 
         cv::imshow("FaceRec", frame);
         cv::waitKey(10);
-
-        // cv::imwrite("/home/yathavan/Documents/faceDetection/output.jpg", frame);
-
-        // std::cout << "\n Face detected success!";
     }
 
     cv::imshow("Detected Face", frame);
